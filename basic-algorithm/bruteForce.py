@@ -1,7 +1,6 @@
-import time#nd perlu
-start = time.time() #nd perlu
-coins = [ 100,500, 1000, 2000]
+coins = [ 500, 1000, 2000]
 change = 8000
+hasil = []
 
 def coin_change(c):
   if c == 0:
@@ -21,5 +20,7 @@ def coin_change(c):
 result = coin_change(change)
 for combo in result:
   print(combo) 
-end = time.time() #nd perlu
-print(end - start) #nd perlu
+  # if(len(combo) >= len(result)):
+  #   continue
+  # hasil = combo
+  # print(hasil)
