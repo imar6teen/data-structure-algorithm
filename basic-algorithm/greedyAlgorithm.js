@@ -7,6 +7,7 @@ function greedyAlgo(mataUang, kembalian) {
   console.time("tes");
   let uangKembalian = [];
   for (let i = 0; i < mataUang.length; i++) {
+    if (kembalian === 0) break;
     while (mataUang[i] <= kembalian) {
       uangKembalian.push(mataUang[i]);
       kembalian = kembalian - mataUang[i];
