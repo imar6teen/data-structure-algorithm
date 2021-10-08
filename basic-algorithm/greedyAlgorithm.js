@@ -1,6 +1,4 @@
 const mataUang = [1000, 500, 400, 200, 100];
-const hargaBarang = 9800;
-const uangOrang = 50000;
 const kembalian = 1800;
 
 function greedyAlgo(mataUang, kembalian) {
