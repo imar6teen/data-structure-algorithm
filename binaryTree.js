@@ -27,29 +27,29 @@ class BinaryTreeBFS {
       tmpqueue.push(tmp.right);
     }
   }
-  deleteDeepest(root, delNode) {
-    let tmpqueue = [root];
-    while (true) {
-      let tmp = tmpqueue.shift();
-      if (tmp === delNode) {
-        tmp = null;
-        return;
-      }
-      if (tmp.left != null) {
-        if (tmp.left === delNode) {
-          tmp.left = null;
+  delete(data) {
+    function deleteDeepest(root, delNode) {
+      let tmpqueue = [root];
+      while (true) {
+        let tmp = tmpqueue.shift();
+        if (tmp === delNode) {
+          tmp = null;
           return;
-        } else tmpqueue.push(tmp.left);
-      }
-      if (tmp.right != null) {
-        if (tmp.right === delNode) {
-          tmp.right = null;
-          return;
-        } else tmpqueue.push(tmp.right);
+        }
+        if (tmp.left != null) {
+          if (tmp.left === delNode) {
+            tmp.left = null;
+            return;
+          } else tmpqueue.push(tmp.left);
+        }
+        if (tmp.right != null) {
+          if (tmp.right === delNode) {
+            tmp.right = null;
+            return;
+          } else tmpqueue.push(tmp.right);
+        }
       }
     }
-  }
-  delete(data) {
     console.time("tes");
     let tmpqueue = [this.root];
     let target = null;
@@ -64,12 +64,53 @@ class BinaryTreeBFS {
       if (tmp.right) tmpqueue.push(tmp.right);
       if (tmpqueue.length === 0) {
         let x = tmp.data;
-        this.deleteDeepest(this.root, tmp);
+        deleteDeepest(this.root, tmp);
         target.data = x;
         console.timeEnd("tes");
         return;
       }
     }
+  }
+  //left root right
+  inorder() {
+    let result = [];
+    function order(root) {
+      if (!root) return null;
+      if (root.left) order(root.left);
+      result.push(root.data);
+      if (root.right) order(root.right);
+      return;
+    }
+    order(this.root);
+    if (result[0] === undefined) return "Tidak terdapat nilai";
+    return result;
+  }
+  //root left right
+  preorder() {
+    let result = [];
+    function order(root) {
+      if (!root) return null;
+      result.push(root.data);
+      if (root.left) order(root.left);
+      if (root.right) order(root.right);
+      return;
+    }
+    order(this.root);
+    if (result[0] === undefined) return "Tidak terdapat nilai";
+    return result;
+  }
+  //left right root
+  postorder() {
+    let result = [];
+    function order(root) {
+      if (!root) return null;
+      if (root.left) order(root.left);
+      if (root.right) order(root.right);
+      result.push(root.data);
+    }
+    order(this.root);
+    if (result[0] === undefined) return "Tidak terdapat nilai";
+    return result;
   }
 }
 
@@ -79,6 +120,5 @@ for (let i = 1; i <= 7; i++) {
   binaryTreeBFS.add(i);
 }
 
-binaryTreeBFS.delete(1);
-binaryTreeBFS.delete(2);
-console.log(binaryTreeBFS);
+// console.log(binaryTreeBFS.root);
+console.log(binaryTreeBFS.postorder());
