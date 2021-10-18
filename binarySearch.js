@@ -2,11 +2,11 @@ let arr = [1, 3, 5, 7, 9, 12, 13, 17];
 let length = arr.length - 1;
 let x = 9;
 
-console.log(binarySearch(0, length, 0, x)); //binarySearch(awal, akhir/length, mid, ygdicari)
+console.log(binarySearch(0, length, x)); //binarySearch(awal, akhir/length, mid, ygdicari)
 
 //recursive
-function binarySearch(awal, length, mid, x) {
-  mid = Math.floor((length + awal) / 2);
+function binarySearch(awal, length, x) {
+  let mid = Math.floor((length + awal) / 2);
   if (arr[mid] == x) {
     return mid;
   } else if (arr[mid] <= x) {
@@ -17,7 +17,7 @@ function binarySearch(awal, length, mid, x) {
   if (length < awal) {
     return "Data tidak ditemukan";
   }
-  return binarySearch(awal, length, mid, x);
+  return binarySearch(awal, length, x);
 }
 
 //iteration loop
