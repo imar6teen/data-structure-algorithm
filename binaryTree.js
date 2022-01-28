@@ -50,7 +50,6 @@ class BinaryTreeBFS {
         }
       }
     }
-    console.time("tes");
     let tmpqueue = [this.root];
     let target = null;
     while (true) {
@@ -66,7 +65,6 @@ class BinaryTreeBFS {
         let x = tmp.data;
         deleteDeepest(this.root, tmp);
         target.data = x;
-        console.timeEnd("tes");
         return;
       }
     }
@@ -120,5 +118,7 @@ for (let i = 1; i <= 7; i++) {
   binaryTreeBFS.add(i);
 }
 
-// console.log(binaryTreeBFS.root);
-console.log(binaryTreeBFS.postorder());
+binaryTreeBFS.delete(3);
+
+console.log(binaryTreeBFS.root);
+// console.log(binaryTreeBFS.inorder());
