@@ -8,7 +8,7 @@ console.log(binarySearch(0, length, x)); //binarySearch(awal, akhir/length, targ
 function binarySearch(awal, length, x) {
   let mid = Math.floor((length + awal) / 2);
   if (arr[mid] == x) {
-    return mid;
+    return "Data ditemukan pada indeks ke " + mid + " di array";
   } else if (arr[mid] < x) {
     awal = mid + 1;
   } else if (arr[mid] > x) {
