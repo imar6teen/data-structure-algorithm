@@ -1,4 +1,5 @@
-//created bot
+#! node
+
 function merge(arr, start, mid, end) {
   let left = start;
   let right = mid + 1;
@@ -50,3 +51,9 @@ console.time("mergeSort");
 mergeSort(arr);
 console.timeEnd("mergeSort");
 console.log(arr);
+
+/**
+ * result of test:
+ * merge sort: 7.2ms
+ * bubble sort: 30.7ms
+ */

@@ -1,107 +1,106 @@
-class Node {
-  constructor(data) {
-    this.data = data;
-    this.left = null;
-    this.right = null;
-  }
-}
-
 class MaxHeap {
   constructor() {
-    this.root = null;
+    this.arrHeap = [];
     this.size = 0;
   }
 
-  insert(data) {
+  //heapify is process for comparing value between non leaf node with leaf nodes and go to the bottom
+
+  insert(value) {
+    this.arrHeap.push(value);
     this.size++;
-    let node = new Node(data);
-    if (!this.root) {
-      this.root = node;
-      return;
-    }
-    let current = this.root;
-    let adjustHeap = [];
-    let tmp = [];
-    while (current) {
-      if (data > current.data) {
-        adjustHeap.push(current);
-      }
-      if (current.left) tmp.push(current.left);
-      else {
-        current.left = node;
-        adjustHeap.push(current.left);
-        break;
-      }
-      if (current.right) tmp.push(current.right);
-      else {
-        current.right = node;
-        adjustHeap.push(current.right);
-        break;
-      }
-      current = tmp.shift();
-    }
-    let child = adjustHeap.pop();
-    while (true) {
-      if (adjustHeap.length === 0) break;
-      let parent = adjustHeap.pop();
-      if (child.data > parent.data) {
-        let tmp = parent.data;
-        parent.data = child.data;
-        child.data = tmp;
-        child = parent;
-      }
+
+    //parent index of the last node
+    let parentLastIndex = this.getParent(this.size - 1);
+
+    // take parentIndex, and heapify it
+    while (parentLastIndex >= 0) {
+      this.maxHeapify(parentLastIndex);
+      parentLastIndex = this.getParent(parentLastIndex);
     }
   }
 
-  delete() {
-    let current = this.root;
-    let tmp = [];
-    let replaceNode = this.root;
-    while (true) {
-      if (tmp.length === 0 && current.left === null && current.right === null) {
-        replaceNode.data = current.data;
+  maxHeapify(i) {
+    let l = this.getLeftChild(i);
+    let r = this.getRightChild(i);
+    let largest = i;
+    if (l < this.size && this.arrHeap[l] > this.arrHeap[largest]) {
+      largest = l;
+    }
+    if (r < this.size && this.arrHeap[r] > this.arrHeap[largest]) {
+      largest = r;
+    }
+    if (largest != i) {
+      this.swap(i, largest);
+      this.maxHeapify(largest);
+    }
+  }
+
+  //heapify all of the array, create a max heap
+  buildMaxHeap() {
+    // Math.floor(this.size / 2) is the last parent node (non-leaf)
+    for (let i = Math.floor(this.size / 2); i >= 0; i--) {
+      this.maxHeapify(i);
+    }
+  }
+
+  swap(i, j) {
+    let temp = this.arrHeap[i];
+    this.arrHeap[i] = this.arrHeap[j];
+    this.arrHeap[j] = temp;
+  }
+
+  getParent(i) {
+    return Math.floor((i - 1) / 2);
+  }
+
+  getLeftChild(i) {
+    return 2 * i + 1;
+  }
+
+  getRightChild(i) {
+    return 2 * i + 2;
+  }
+
+  delete(value) {
+    let heapifyIndex = 0;
+    //locate value wants to delete
+    for (let i = 0; i < this.size; i++) {
+      if (this.arrHeap[i] === value) {
+        //swap it with the last node
+        this.swap(i, this.size - 1);
+        //delete the last node
+        this.arrHeap.splice(this.size - 1, 1);
+        this.size--;
+        heapifyIndex = i;
         break;
       }
-      if (current.left) tmp.push(current.left);
-      if (current.right) tmp.push(current.right);
-      current = tmp.shift();
     }
-    current = this.root;
-    while (true) {
-      current;
-      let child;
-      let parent = current;
-      if (current.right !== null) {
-        if (current.left.data >= current.right.data) {
-          child = current.left;
-          current = current.left;
-        } else {
-          child = current.right;
-          current = current.right;
-        }
-      } else if (current.left !== null) {
-        child = current.left;
-        current = current.left;
-      } else break;
-      if (child.data >= parent.data) {
-        let tmp = child.data;
-        child.data = parent.data;
-        parent.data = tmp;
-      }
-    }
+    //heapify it from the swapped index
+    this.maxHeapify(heapifyIndex);
+  }
+
+  //remove root of the heap
+  extractMax() {
+    this.swap(0, this.size - 1);
+    this.arrHeap.splice(this.size - 1, 1);
     this.size--;
+    this.maxHeapify(0);
   }
 }
 
-function main() {
-  let heap = new MaxHeap();
-  heap.insert(80);
-  heap.insert(60);
-  heap.insert(40);
-  heap.insert(100);
-  //   heap.insert(200);
-  heap.delete();
-  console.log(heap);
-}
+const maxHeap = new MaxHeap();
 
-main();
+maxHeap.insert(2);
+maxHeap.insert(5);
+maxHeap.insert(7);
+maxHeap.insert(10);
+maxHeap.insert(1);
+maxHeap.insert(3);
+maxHeap.insert(4);
+maxHeap.insert(2);
+maxHeap.insert(8);
+
+maxHeap.delete(5);
+
+console.log(maxHeap.arrHeap);
