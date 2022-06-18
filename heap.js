@@ -32,6 +32,7 @@ class MaxHeap {
     }
     if (largest != i) {
       this.swap(i, largest);
+
       this.maxHeapify(largest);
     }
   }
@@ -83,8 +84,10 @@ class MaxHeap {
   //remove root of the heap
   extractMax() {
     this.swap(0, this.size - 1);
+    // delete the last node
     this.arrHeap.splice(this.size - 1, 1);
     this.size--;
+    // heapify it from the root because the root is the largest
     this.maxHeapify(0);
   }
 }
