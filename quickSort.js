@@ -51,4 +51,4 @@ console.time("quickSort");
 quickSort(arr1);
 console.timeEnd("quickSort");
 
-console.log(arr);
+// console.log(arr);
